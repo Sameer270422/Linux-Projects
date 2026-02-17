@@ -1,0 +1,6 @@
+groupadd devops
+useradd -m -G devops appuser
+mkdir -p /opt/app/{logs,data,scripts}
+chown -R appuser:devops /opt/app
+chmod -R 750 /opt/app
+
