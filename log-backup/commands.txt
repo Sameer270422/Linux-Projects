@@ -1,0 +1,39 @@
+# Project 2: Log Backup & Cleanup Automation
+# Commands Executed
+
+# Create project directory (vagrant user)
+cd ~/linux-projects
+mkdir log-backup
+cd log-backup
+touch README.md commands.txt backup.sh
+
+# Create application log directory (root)
+sudo mkdir -p /var/log/myapp
+sudo touch /var/log/myapp/app.log
+sudo touch /var/log/myapp/error.log
+sudo chown -R appuser:devops /var/log/myapp
+sudo chmod -R 750 /var/log/myapp
+
+# Create backup directory (root)
+sudo mkdir -p /opt/app/log-backup
+sudo chown -R appuser:devops /opt/app
+sudo chmod -R 750 /opt/app
+
+# Backup script permissions
+sudo chown appuser:devops backup.sh
+sudo chmod 750 backup.sh
+chmod +x backup.sh
+
+# Test backup script
+sudo ./backup.sh
+
+# Verify backup (using sudo or appuser)
+sudo ls /opt/app/log-backup
+
+# Cron job setup (root)
+sudo crontab -e
+0 2 * * * /home/vagrant/linux-projects/log-backup/backup.sh
+
+# Verify cron job
+sudo crontab -l
+
